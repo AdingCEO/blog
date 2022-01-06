@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount', #social 계정 사용하는법 공부해보자
+    # ... include the providers you want to enable:
+    'allauth.socialaccount.providers.auth0',
+    'allauth.socialaccount.providers.kakao',
+    'allauth.socialaccount.providers.google',
 ]
 
 SITE_ID = 1
@@ -139,7 +143,12 @@ AUTHENTICATION_BACKENDS = [
 
 ACCOUNT_SIGNUP_REDIRECT_URL = 'index'
 LOGIN_REDIRECT_URL = 'index'
-
+ACCOUNT_LOGOUT_ON_GET=True
+ACCOUNT_AUTHENTICATION_METHOD='email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_SESSION_REMEMBER = True
+# SESION_COOKIE_AGE = 3600
 
 # Email Setting
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # 콘솔로 메일보내게하는 설정
