@@ -19,7 +19,7 @@ class UserAdmin(admin.ModelAdmin):
     
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    pass   
+    pass
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):

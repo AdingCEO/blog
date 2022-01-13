@@ -1,0 +1,53 @@
+{% extends './navbar.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel='stylesheet' href="{% static 'blog/css/post_form.css' %}?after">
+{% endblock css %}
+
+{% block post_container %}
+
+<form method="POST">{% csrf_token %}
+    <!-- {{form.as_p}} -->
+    
+    
+    <h3>제목</h3>
+    <p>{{form.title}}</p>
+    {% for error in for.title.errors %}
+        <p>{{error}}</p>
+    {% endfor %}
+    
+    <h3>내용</h3>
+    <p>{{form.content}}</p>
+    {% for error in for.content.errors %}
+        <p>{{error}}</p>
+    {% endfor %}
+    
+    <h3>장소</h3>
+    <p>{{form.place}}</p>
+    {% for error in for.place.errors %}
+        <p>{{error}}</p>
+    {% endfor %}
+    
+    <h3>멤버</h3>
+    <p>{{form.member}}</p>
+    {% for error in for.member.errors %}
+        <p>{{error}}</p>
+    {% endfor %}
+    
+    <h3>사진</h3>
+    <p>{{form.image}}</p>
+    {% for error in for.image.errors %}
+        <p>{{error}}</p>
+    {% endfor %}
+    
+    <h3>작성자</h3>
+    <p>{{form.user}}</p>
+    {% for error in for.user.errors %}
+        <p>{{error}}</p>
+    {% endfor %}
+    
+    <input type='submit' value='전송'>
+</form>
+
+{% endblock post_container %}

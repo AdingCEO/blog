@@ -1,0 +1,41 @@
+{% extends './navbar.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel='stylesheet' href="{% static 'blog/css/post_list.css' %}?after">
+{% endblock css %}
+
+{% block post_container %}
+    <div class='header'>
+        <div>
+            <h1>글 목록 페이지</h1>
+        </div>
+        <div>
+            <a href="{% url 'post-create' %}">글 쓰기</a>
+        </div>
+    </div>
+    
+    <div class='article'>
+    {% for post in page.object_list %} <!-- page.object_list로 한 page의 post들을 queryset 형태로 가져올 수 있음 --> 
+        <div class='article_content'>
+            <div class='title'> 제목: <a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></div>
+            <div class='content'> 내용: {{ post.content }} </div>
+            <div class='dt_created'> 작성일: {{ post.dt_created | date:"Y.m.d" }} </div>
+            <div class='name'> 작성자: {{ post.user.name }} </div>
+        </div>
+    {% endfor %}
+    </div>
+
+    <div class='paginator'>
+        {% if page.has_previous %}
+            <a href="?page=1">first</a>
+            <a href="?page={{page.previous_page_number}}">prev</a>
+        {% endif %}
+        <p>{{page.number}} of {{page.paginator.num_pages}}</p>
+        {% if page.has_next %}
+            <a href="?page={{page.next_page_number}}">next</a>
+            <a href="?page={{page.paginator.num_pages}}">last</a>
+        {% endif %}
+    </div>
+
+{% endblock post_container %}

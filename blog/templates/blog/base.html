@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title>Ilsan Blog</title>
+        {% block css %}
+        {% endblock css %}
+    </head>
+    
+    <body>
+        {% block navbar %}
+        {% endblock navbar %}
+        <hr>
+        {% block post_container %}
+        {% endblock post_container %}
+    </body>
+</html>

@@ -1,0 +1,23 @@
+{% extends './navbar.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel='stylesheet' href="{% static 'blog/css/post_detail.css' %}">
+{% endblock css %}
+
+{% block post_container %}
+
+<div class='title'> 제목: {{ post.title }} </div>
+<div class='content'> 내용: {{ post.content }} </div>
+<div class='place'> 장소: {{ post.place }} </div>
+<div class='member'> 모인사람 수: {{ post.member }} </div>
+<div class='dt_created'> 작성일: {{ post.dt_created }} </div>
+<div class='dt_modified'> 수정일: {{ post.dt_modified }} </div>
+<div class='name'> 작성자: {{ post.user.name }} </div>
+<div class='tag'> 태그: {{ post.tag_set }} </div>
+
+<a href="{% url 'post-list' %}">돌아가기</a>
+<a href="{% url 'post-update' post.id %}">수정하기</a>
+<a href="{% url 'post-delete' post.id %}">삭제하기</a>
+
+{% endblock post_container %}

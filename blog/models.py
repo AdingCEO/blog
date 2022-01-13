@@ -1,9 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+#유효성검사 import
+from django.core.validators import MinLengthValidator #built-in validators
+from .validators import validate_symbols
+
 class User(AbstractUser):
     nickname = models.CharField(max_length=15, unique=True, null=True)
-    
+    name = models.CharField(max_length=10)
     def __str__(self):
         return self.email
     
@@ -15,13 +19,13 @@ class Profile(models.Model):
     army=models.CharField(max_length=50)
     
     def __str__(self):
-        return self.user
+        return self.address
     
     
     
 class Post(models.Model):
-    title = models.CharField(max_length=50)
-    content = models.TextField()
+    title = models.CharField(max_length=50, unique=True, error_messages={'unique':'이미 있는 제목입니다'})
+    content = models.TextField(validators=[MinLengthValidator(2, '2글자 이상 적어줘잉'), validate_symbols])
     place = models.CharField(max_length=50)
     member = models.IntegerField()
     image = models.ImageField(blank=True)
