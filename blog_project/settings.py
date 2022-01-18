@@ -150,7 +150,7 @@ ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_SIGNUP_FORM_CLASS = 'blog.forms.SignupForm'
 ACCOUNT_PASSWORD_INPUT_RENDER_VALUE = True # 회원가입시 다른 필드가 유효성 만족 못해도 만족하는 필드 값들은 놔둠
 
-ACCOUNT_EMAIL_VARIFICATION = "optional" # mandatory none
+ACCOUNT_EMAIL_VARIFICATION = "none" # mandatory optional none
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True # 이메일 인증 링크 누르면 바로 인증됨
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'account_email_confirmation_done'
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = 'account_email_confirmation_done'
@@ -158,11 +158,11 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX='' #이메일 보낼때 제목 앞에 도메인 붙
 # PASSWORD_RESET_TIMEOUT = 3600 # 디폴트 3일
 
 # Email Setting
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # 콘솔로 메일보내게하는 설정
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # 콘솔로 메일보내게하는 설정
 # kjykjy1037@gmail.com으로 메일보내기
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
-# EMAIL_HOST='smtp.gmail.com'
-# EMAIL_PORT=587
-# EMAIL_USE_TLS=True
-# EMAIL_HOST_USER="kjykjy1037@gmail.com"
-# EMAIL_HOST_PASSWORD='czcezljnuwyuwwlm'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER="kjykjy1037@gmail.com"
+EMAIL_HOST_PASSWORD='czcezljnuwyuwwlm'

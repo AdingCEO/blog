@@ -34,7 +34,7 @@
             {% endfor %}
         </div>
         <div>
-        {{ form.password1|add_class:'cp-input'|attr:'placeholder:비밀번호'}}
+        {{ form.password1|add_class:'cp-input'|attr:'placeholder:비밀번호는 8자 이상으로 만들어주세요'}}
             {% for error in forms.password1.errors %}
                 <div class = 'error-message'>{{ error }}</div>
             {% endfor %}
