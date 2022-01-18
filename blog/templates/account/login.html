@@ -1,0 +1,42 @@
+<!-- templates/account/html파일 넣어줘야 적용됨 -->
+{% extends "blog/navbar.html" %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block css %}
+    <link rel='stylesheet' href="{% static 'blog/css/base.css' %}?after">
+    <link rel='stylesheet' href="{% static 'blog/css/signup.css' %}?after">
+{% endblock css %}
+
+{% block title %}회원가입 | Coplate{% endblock title %}
+
+{% block post_container %}
+<div class="account-background">
+  <main class="account">
+    <form method="post"> {% csrf_token %}
+        {% for error in form.non_field_errors %}
+        <div class = 'error-message'>{{error}}</div>
+        {% endfor %}
+        <div>
+            {{ form.login|attr:'class:cp-input'|attr:'placeholder:이메일'|add_error_class:'error'}}
+            {% for error in forms.login.errors %}
+                <div class = 'error-message'>{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.password|attr:'class:cp-input'|attr:'placeholder:비밀번호'|add_error_class:'error'}}
+            {% for error in forms.password.errors %}
+                <div class = 'error-message'>{{ error }}</div>
+            {% endfor %}
+        </div>
+      <button class="cp-button" type="submit">로그인</button>
+    </form>
+    
+    <div class="info">
+      <a class="item" href="{% url 'account_reset_password' %}">비밀번호 찾기</a>
+      <a class="item" href="{% url 'account_signup' %}">회원가입</a>
+    </div>
+  </main>
+</div>
+{% endblock post_container %}

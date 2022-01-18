@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'blog',
+    'widget_tweaks',
     'allauth',
     'allauth.account',
     'allauth.socialaccount', #social 계정 사용하는법 공부해보자
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'blog.middleware.ProfileSetupMiddleware',
 ]
 
 ROOT_URLCONF = 'blog_project.urls'
@@ -97,24 +99,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'blog.validators.CustomPasswordValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+   
 ]
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko'
 
 TIME_ZONE = 'Asia/Seoul'
 
@@ -129,11 +123,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/uploads/'
+
 
 # Auth Setting
 
 AUTH_USER_MODEL = 'blog.User'
-
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
@@ -141,15 +137,32 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-ACCOUNT_SIGNUP_REDIRECT_URL = 'post-list'
+ACCOUNT_SIGNUP_REDIRECT_URL = 'set_profile'
 LOGIN_REDIRECT_URL = 'post-list'
+LOGIN_URL = "account_login" # 데코레이터, 믹스인 위한 설정
+
 ACCOUNT_LOGOUT_ON_GET=True
 ACCOUNT_AUTHENTICATION_METHOD='email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_SESSION_REMEMBER = True
 # SESION_COOKIE_AGE = 3600
+ACCOUNT_SIGNUP_FORM_CLASS = 'blog.forms.SignupForm'
+ACCOUNT_PASSWORD_INPUT_RENDER_VALUE = True # 회원가입시 다른 필드가 유효성 만족 못해도 만족하는 필드 값들은 놔둠
+
+ACCOUNT_EMAIL_VARIFICATION = "optional" # mandatory none
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True # 이메일 인증 링크 누르면 바로 인증됨
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'account_email_confirmation_done'
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = 'account_email_confirmation_done'
+ACCOUNT_EMAIL_SUBJECT_PREFIX='' #이메일 보낼때 제목 앞에 도메인 붙는거 지우기
+# PASSWORD_RESET_TIMEOUT = 3600 # 디폴트 3일
 
 # Email Setting
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # 콘솔로 메일보내게하는 설정
-
+# kjykjy1037@gmail.com으로 메일보내기
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
+# EMAIL_HOST='smtp.gmail.com'
+# EMAIL_PORT=587
+# EMAIL_USE_TLS=True
+# EMAIL_HOST_USER="kjykjy1037@gmail.com"
+# EMAIL_HOST_PASSWORD='czcezljnuwyuwwlm'

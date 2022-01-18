@@ -1,10 +1,13 @@
-navbar {
-    display:flex;
-    justify-content: space-between;
-    align-items:baseline;
+image {
+    width : 200px;
+    height : 200px;
 }
 
-body {
-    margin-left:10%;
-    margin-right:10%;
+.post-detail{
+    display : flex;
+    justify-content: space-between;
+}
+
+.post-detail-left{
+    display:inline-block;
 }

@@ -1,0 +1,39 @@
+{% extends './navbar.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block css %}
+    <link rel='stylesheet' href="{% static 'blog/css/base.css' %}?after">
+    <link rel='stylesheet' href="{% static 'blog/css/post_form.css' %}?after">
+{% endblock css %}
+
+{% block post_container %}
+
+<form method="post" autocomplete='off' enctype='multipart/form-data'>{% csrf_token %}
+
+    <h3>자기소개글</h3>
+    <p>{{form.intro}}</p>
+    {% for error in form.intro.errors %}
+        <p>{{error}}</p>
+    {% endfor %}
+    
+    <h3>주소</h3>
+    <p>{{form.address}}</p>
+    {% for error in form.address.errors %}
+        <p>{{error}}</p>
+    {% endfor %}
+    
+    <h3>군대 어디나옴?</h3>
+    <p>{{form.army}}</p>
+    {% for error in form.army.errors %}
+        <p>{{error}}</p>
+    {% endfor %}
+
+    <h3>프로필사진</h3>
+    <p>{{form.profile_pic}}</p>
+    
+    <input type='hidden' name='user' value={{user.id}} >
+    
+    <input type='submit' value='완료'>
+</form>
+
+{% endblock post_container %}

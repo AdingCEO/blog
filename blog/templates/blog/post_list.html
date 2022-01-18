@@ -3,39 +3,56 @@
 
 {% block css %}
     <link rel='stylesheet' href="{% static 'blog/css/post_list.css' %}?after">
+    <link rel='stylesheet' href="{% static 'blog/css/base.css' %}?after">
 {% endblock css %}
 
 {% block post_container %}
-    <div class='header'>
-        <div>
-            <h1>글 목록 페이지</h1>
-        </div>
-        <div>
-            <a href="{% url 'post-create' %}">글 쓰기</a>
-        </div>
+<div class='header'>
+    <div>
+        <h1>글 목록 페이지</h1>
     </div>
-    
+    <div>
+        <a href="{% url 'post-create' %}">글 쓰기</a>
+    </div>
+</div>
+
+<div class='search'>
+    <form method='post'> {% csrf_token %}
+        검색: {{form.search_word}}
+        <input type='submit' value='입력'>
+    </form>
+</div>
+<br>
+{% if page %}
     <div class='article'>
     {% for post in page.object_list %} <!-- page.object_list로 한 page의 post들을 queryset 형태로 가져올 수 있음 --> 
-        <div class='article_content'>
-            <div class='title'> 제목: <a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></div>
-            <div class='content'> 내용: {{ post.content }} </div>
-            <div class='dt_created'> 작성일: {{ post.dt_created | date:"Y.m.d" }} </div>
-            <div class='name'> 작성자: {{ post.user.name }} </div>
-        </div>
+        <a style='text-decoration-line: none; color:black;' href="{% url 'post-detail' post.id %}">
+                <div class='article_content'>
+                    <div style='padding:10px'>
+                        <div class='title'> 제목: {{ post.title }}</div>
+                        <div class='content'> 내용: {{ post.content }} </div>
+                        <div class='dt_created'> 작성일: {{ post.dt_created | date:"Y.m.d" }} </div>
+                        <div class='name'>작성자: <a href="{% url 'user_profile' post.user.id %}">{{ post.user.name }}</a> <img style="width:20px; heigh:20px;" src="{{ post.user.profile.profile_pic.url }}"></div>
+                    </div>
+                </div>
+        </a>
     {% endfor %}
     </div>
 
     <div class='paginator'>
-        {% if page.has_previous %}
-            <a href="?page=1">first</a>
-            <a href="?page={{page.previous_page_number}}">prev</a>
-        {% endif %}
-        <p>{{page.number}} of {{page.paginator.num_pages}}</p>
-        {% if page.has_next %}
-            <a href="?page={{page.next_page_number}}">next</a>
-            <a href="?page={{page.paginator.num_pages}}">last</a>
-        {% endif %}
+    {% if page.has_previous %}
+        <a href="?page=1">first</a>
+        <a href="?page={{page.previous_page_number}}">prev</a>
+    {% endif %}
+    <p>{{page.number}} of {{page.paginator.num_pages}}</p>
+    {% if page.has_next %}
+        <a href="?page={{page.next_page_number}}">next</a>
+        <a href="?page={{page.paginator.num_pages}}">last</a>
+    {% endif %}
     </div>
+{% else %}
+해당 단어를 포함한 글이 없어요
+<a href="{% url 'post-list' %}">되돌아가기</a>
+{% endif%}
 
 {% endblock post_container %}

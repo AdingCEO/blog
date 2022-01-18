@@ -3,28 +3,29 @@
 {% load socialaccount %}
 
 {% block navbar %}
+<br>
 <navbar>
     <div>
     <a href="{% url 'post-list' %}">홈</a>
     {% if user.is_authenticated %}
     <a href="{% url 'account_logout' %}">로그아웃</a>
+    <a href="{% url 'account_change_password' %}">비밀번호 변경</a>
+    <a href="{% url 'update_profile' %}">프로필 수정</a>  
     {% else %}
     <a href="{% url 'account_login' %}">로그인</a>
-    <a href="{% provider_login_url 'kakao' method='oauth2' %}">카카오 로그인</a>
-    <a href="{% provider_login_url 'google' method='oauth2' %}">구글 로그인</a>
+    <!-- <a href="{% provider_login_url 'kakao' method='oauth2' %}">카카오 로그인</a>
+    <a href="{% provider_login_url 'google' method='oauth2' %}">구글 로그인</a> -->
     <a href="{% url 'account_signup' %}">회원가입</a>
-    {% endif%}
+    {% endif %}
     </div>
     
     <div>
         {% if user.is_authenticated %}
-            <p>
-                안녕하세요, {{user}}님!
-            </p>
+        <p><a href="{% url 'user_profile' user.id %}">내 프로필</a> 안녕하세요, {{user.nickname}}님!</p>
         {% else %}
-            <p>
-                로그아웃된 상태입니다.
-            </p>
+        <p>
+            로그아웃된 상태입니다.
+        </p>
         {% endif%}
     </div>
 </navbar>

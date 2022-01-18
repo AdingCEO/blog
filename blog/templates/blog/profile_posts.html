@@ -1,0 +1,36 @@
+{% extends './navbar.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel='stylesheet' href="{% static 'blog/css/base.css' %}?after">
+    <link rel='stylesheet' href="{% static 'blog/css/post_list.css' %}">
+{% endblock css %}
+
+{% block post_container %}
+
+
+<h2 style='margin-top:40px; margin-bottom:40px;'>
+    {{user.name}}님의 포스팅({{paginator.count}})
+</h2>
+<div class='article'>
+    {% for post in page.object_list %}
+    <div class='article_content'>
+    <div class='title'> 제목: <a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></div>
+    <div class='content'> 내용: {{ post.content }} </div>
+    <div class='dt_created'> 작성일: {{ post.dt_created | date:"Y.m.d" }} </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class='paginator'>
+    {% if page.has_previous %}
+        <a href="?page=1">first</a>
+        <a href="?page={{page.previous_page_number}}">prev</a>
+    {% endif %}
+    <p>{{page.number}} of {{page.paginator.num_pages}}</p>
+    {% if page.has_next %}
+        <a href="?page={{page.next_page_number}}">next</a>
+        <a href="?page={{page.paginator.num_pages}}">last</a>
+    {% endif %}
+</div>
+{% endblock post_container %}

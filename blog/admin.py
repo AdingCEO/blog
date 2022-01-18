@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from blog.models import User, Profile, Post, Comment, Tag
+from blog.models import User, Profile, Post, Comment
 
 # adminmodel 등록방법
 # 1. admin.site.register(User, UserAdmin)
@@ -27,8 +27,4 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    pass
-
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
     pass

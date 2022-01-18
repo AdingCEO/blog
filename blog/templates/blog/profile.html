@@ -1,0 +1,43 @@
+{% extends './navbar.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel='stylesheet' href="{% static 'blog/css/base.css' %}?after">
+    <link rel='stylesheet' href="{% static 'blog/css/post_list.css' %}">
+{% endblock css %}
+
+{% block post_container %}
+
+<h2>{{profile_user.name}}님의 프로필</h2>
+<div class='profile_box'>
+    <div class='profile_main'>
+        <img style="width:100px; heigh:100px; margin-bottom:10px;" src="{{ profile_user.profile.profile_pic.url }}">
+        <div> "{{profile_user.profile.intro}}" </div>
+    </div>
+    <div class='profile_content'>
+        <br>
+        <div> 주소: {{profile_user.profile.address}} </div>
+        <br>
+        <div> 군대: {{profile_user.profile.army}} </div>
+    </div>
+</div>
+
+<hr>
+{% if profile_user_posts %}
+<div style='margin-top:40px;'>{{profile_user.name}}님의 최신 포스팅</div>
+<div class='article'>
+    {% for post in profile_user_posts %}
+    <div class='article_content'>
+    <div class='title'> 제목: <a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></div>
+    <div class='content'> 내용: {{ post.content }} </div>
+    <div class='dt_created'> 작성일: {{ post.dt_created | date:"Y.m.d" }} </div>
+    </div>
+    {% endfor %}
+</div>
+<a href="{% url 'user_posts' profile_user.id %}">모두보기</a>
+{% else %}
+아직 포스팅이 없어요ㅠ
+{% endif %}
+
+
+{% endblock post_container %}
